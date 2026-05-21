@@ -15,16 +15,12 @@ const XIcon = () => (
   </svg>
 );
 
-interface RegisterFormProps {
-  monomakhClassName: string;
-}
-
-export default function RegisterForm({ monomakhClassName }: RegisterFormProps) {
+export default function RegisterForm() {
   const [studentId, setStudentId] = useState('');
   const [emailPrefix, setEmailPrefix] = useState('');
 
   return (
-    <div className="bg-zinc-50 rounded-2xl shadow-2xl w-full max-w-[400px] overflow-hidden">
+    <div className="bg-zinc-100 rounded-2xl shadow-2xl w-full max-w-[400px] overflow-hidden">
       <div className="bg-white p-3.5 flex justify-end border-b border-zinc-100">
         <button className="text-zinc-500 hover:text-zinc-800 transition-colors cursor-pointer">
           <XIcon />
@@ -32,7 +28,7 @@ export default function RegisterForm({ monomakhClassName }: RegisterFormProps) {
       </div>
 
       <div className="p-8 flex flex-col">
-        <h1 className={`text-5xl text-black tracking-tight leading-tight mb-8 ${monomakhClassName}`}>
+        <h1 className="text-4xl text-black tracking-tight leading-tight mb-8 font-gunter">
           MDCU
           <br />
           <span className="tracking-tighter">CONNECT</span>
@@ -47,7 +43,6 @@ export default function RegisterForm({ monomakhClassName }: RegisterFormProps) {
               id="studentId"
               type="text"
               maxLength={10}
-              placeholder="xxxxxxxxxx"
               value={studentId}
               onChange={(e) => setStudentId(e.target.value.replace(/\D/g, ''))}
               className="w-full border rounded-lg p-2.5 text-black text-sm focus:ring-1 focus:ring-black focus:border-black outline-none"
@@ -74,7 +69,7 @@ export default function RegisterForm({ monomakhClassName }: RegisterFormProps) {
 
           <button 
             type="submit" 
-            className="min-w-[140px] border-1 border-black rounded-lg py-1 px-4 text-black text-md hover:bg-black hover:text-white cursor-pointer transition-all mb-6"
+            className="min-w-[140px] border-1 border-black rounded-lg py-1 px-4 text-black text-md hover:shadow-sm cursor-pointer transition-all mb-6"
           >
             REGISTER
           </button>
