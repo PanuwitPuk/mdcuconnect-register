@@ -1,65 +1,112 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import type { NextPage } from 'next';
+import { useState } from 'react';
+// 1. Import ฟอนต์จาก next/font/google
+import { Kanit, Monomakh } from 'next/font/google';
+
+// 2. ตั้งค่าฟอนต์ Kanit (สำหรับเนื้อหาทั่วไป)
+const kanit = Kanit({
+  weight: ['400', '500', '600'],
+  subsets: ['thai', 'latin'],
+  display: 'swap',
+});
+
+// 3. ตั้งค่าฟอนต์ Monomakh (สำหรับหัวข้อ MDCU CONNECT)
+const monomakh = Monomakh({
+  weight: '400', // Monomakh มีแค่น้ำหนัก 400 (Regular)
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const XIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="w-5 h-5"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
+const RegisterPage: NextPage = () => {
+  const [studentId, setStudentId] = useState('');
+  const [emailPrefix, setEmailPrefix] = useState('');
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    // 4. ครอบคลาสของ Kanit ไว้ที่ div นอกสุด เพื่อให้ข้อความทั้งหมดในหน้านี้ใช้ฟอนต์ Kanit เป็นค่าเริ่มต้น
+    <div className={`min-h-screen bg-zinc-950 flex items-center justify-center p-4 ${kanit.className}`}>
+      
+      <div className="bg-zinc-50 rounded-2xl shadow-2xl w-full max-w-[400px] overflow-hidden">
+        
+        <div className="bg-white p-3.5 flex justify-end border-b border-zinc-100">
+          <button className="text-zinc-500 hover:text-zinc-800 transition-colors cursor-pointer">
+            <XIcon />
+          </button>
+        </div>
+
+        <div className="p-8 flex flex-col">
+          
+          <h1 className={`text-5xl text-black tracking-tight leading-tight mb-8 ${monomakh.className}`}>
+            MDCU
+            <br />
+            <span className="tracking-tighter">CONNECT</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+
+          <form className="w-full flex flex-col items-center">
+            
+            <div className="w-full mb-5">
+              <label htmlFor="studentId" className="block text-left text-sm font-semibold text-black mb-1.5">
+                รหัสนิสิต 10 หลัก
+              </label>
+              <input
+                id="studentId"
+                type="text"
+                maxLength={10}
+                placeholder="xxxxxxxxxx"
+                value={studentId}
+                onChange={(e) => setStudentId(e.target.value.replace(/\D/g, ''))}
+                className="w-full border rounded-lg p-2.5 text-black text-sm focus:ring-1 focus:ring-black focus:border-black outline-none"
+              />
+            </div>
+
+            <div className="w-full mb-8">
+              <label htmlFor="email" className="block text-left text-sm font-semibold text-black mb-1.5">
+                ที่อยู่อีเมล (@docchula.com)
+              </label>
+              <div className="relative w-full">
+                <input
+                  id="email"
+                  type="text"
+                  value={emailPrefix}
+                  onChange={(e) => setEmailPrefix(e.target.value)}
+                  className="w-full border rounded-lg p-2.5 pr-[110px] text-black text-sm focus:ring-1 focus:ring-black focus:border-black outline-none"
+                />
+                <span className="absolute inset-y-0 right-0 flex items-center px-3 text-black font-medium text-sm">
+                  @docchula.com
+                </span>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              className="min-w-[140px] border-1 border-black rounded-lg py-1 px-4 text-black text-md hover:bg-black hover:text-white cursor-pointer transition-all mb-6"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              REGISTER
+            </button>
+          </form>
+
+          <div className="text-center text-zinc-500 space-y-0.5 text-xs">
+            <p>เพื่อยืนยันตัวตนก่อนเริ่มต้นใช้งาน</p>
+            <p>ระบบจะส่งข้อความไปยังอีเมลที่ท่านลงทะเบียน</p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
     </div>
   );
-}
+};
+
+export default RegisterPage;
